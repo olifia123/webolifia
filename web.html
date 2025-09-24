@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portofolio Olifia</title>
+
+  <!-- Google Fonts: Quicksand -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --pink-light: #ffeaf4;
+      --pink: #ffc0cb;
+      --pink-dark: #ff69b4;
+      --white: #ffffff;
+      --text-dark: #333333;
+      --text-light: #f0f0f0;
+      --bg-dark: #1e1e1e;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: var(--pink-light);
+      color: var(--text-dark);
+      overflow: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .dark-mode {
+      background: var(--bg-dark);
+      color: var(--text-light);
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--pink);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      z-index: 100;
+      box-sizing: border-box;
+    }
+
+    #menuBtn {
+      background: var(--white);
+      border: 2px solid var(--pink-dark);
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      color: var(--pink-dark);
+      font-weight: 600;
+      font-size: 1rem;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+
+    #menuBtn:hover {
+      background-color: var(--pink-dark);
+      color: var(--white);
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .controls button,
+    .controls select {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 2px solid var(--pink-dark);
+      background: var(--white);
+      color: var(--pink-dark);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .controls button:hover,
+    .controls select:hover {
+      background-color: var(--pink-dark);
+      color: var(--white);
+    }
+
+    #autoSlideBtn {
+      min-width: 100px;
+    }
+
+    #languageSwitcher {
+      min-width: 110px;
+    }
+
+    nav#sidebar {
+      position: fixed;
+      top: 60px;
+      left: 10px;
+      background: var(--white);
+      border: 2px solid var(--pink);
+      border-radius: 10px;
+      box-shadow: 0 0 10px var(--pink);
+      display: none;
+      z-index: 90;
+      user-select: none;
+    }
+
+    nav#sidebar.show {
+      display: block;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      width: 180px;
+    }
+
+    nav ul li {
+      padding: 12px 20px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--pink);
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--pink-dark);
+      transition: background-color 0.3s ease;
+    }
+
+    nav ul li:hover,
+    nav ul li:focus {
+      background: var(--pink-light);
+      outline: none;
+    }
+
+    main {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      box-sizing: border-box;
+      padding-top: 60px; /* space for fixed header */
+    }
+
+    .slides {
+      display: flex;
+      width: 400%; /* 4 slides */
+      height: calc(100vh - 60px);
+      transition: transform 0.7s ease-in-out;
+      overflow: hidden;
+    }
+
+    .slide {
+      width: 100%;
+      flex-shrink: 0;
+      padding: 30px 20px 20px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+
+    /* Slide 0: Biodata */
+    .bio {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .bio img {
+      width: 180px;
+      border-radius: 12px;
+      border: 3px solid var(--pink-dark);
+      object-fit: cover;
+      box-shadow: 0 0 12px var(--pink-dark);
+    }
+
+    .bio ul {
+      padding: 0;
+      list-style: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--pink-dark);
+      text-align: left;
+    }
+
+    .bio ul li {
+      margin: 8px 0;
+    }
+
+    /* Slide 1: Sosial Media */
+    .social-links {
+      padding-left: 0;
+      list-style: none;
+      max-width: 300px;
+      margin: 0 auto;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+
+    .social-links li {
+      margin: 15px 0;
+    }
+
+    .social-links a {
+      color: var(--pink-dark);
+      text-decoration: none;
+      border: 2px solid var(--pink-dark);
+      padding: 8px 16px;
+      border-radius: 10px;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+    }
+
+    .social-links a:hover,
+    .social-links a:focus {
+      background-color: var(--pink-dark);
+      color: var(--white);
+      outline: none;
+    }
+
+    /* Slide 2: Tentang */
+    #slide2 p {
+      max-width: 600px;
+      margin: 12px auto;
+      line-height: 1.5;
+      font-weight: 500;
+      font-size: 1.05rem;
+      color: var(--pink-dark);
+    }
+
+    /* Slide 3: Diary */
+    .diary {
+      background: var(--white);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 2px 2px 15px var(--pink);
+      margin-bottom: 25px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      font-weight: 500;
+      font-size: 1.05rem;
+      color: var(--pink-dark);
+      line-height: 1.6;
+    }
+
+    .diary-images {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .diary-images img {
+      width: 48%;
+      border-radius: 15px;
+      box-shadow: 0 2px 15px rgba(255, 105, 180, 0.6);
+      object-fit: cover;
+      height: 180px;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .diary-images img:hover {
+      transform: scale(1.05);
+    }
+
+    footer {
+      padding: 25px 20px;
+      background: var(--pink-light);
+      text-align: center;
+      border-top: 2px solid var(--pink);
+      font-weight: 600;
+      color: var(--pink-dark);
+      font-size: 0.9rem;
+      user-select: none;
+    }
+
+    footer h3 {
+      margin: 0 0 15px;
+      font-weight: 700;
+      color: var(--pink-dark);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav ul {
+        width: 140px;
+      }
+      .bio ul, .social-links {
+        font-size: 1rem;
+      }
+      #slide2 p, .diary {
+        font-size: 1rem;
+      }
+      .diary-images img {
+        width: 100%;
+        height: 200px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px 15px;
+      }
+      .controls {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      nav#sidebar {
+        top: 55px;
+        left: 5px;
+        width: 90%;
+      }
+      nav ul {
+        width: 100%;
+      }
+      .bio img {
+        width: 140px;
+      }
+      .diary-images img {
+        width: 100%;
+        height: 160px;
+      }
+      #menuBtn {
+        font-size: 1.1rem;
+        padding: 10px 15px;
+      }
+      .controls button, .controls select {
+        min-width: 90px;
+        padding: 8px 12px;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button id="menuBtn" aria-label="Buka navigasi utama">📂 Klik di sini</button>
+    <div class="controls" role="toolbar" aria-label="Kontrol mode dan bahasa">
+      <button id="toggleMode" aria-pressed="false" aria-label="Beralih mode gelap-terang">🌙 / ☀️</button>
+      <select id="languageSwitcher" aria-label="Pilih bahasa">
+        <option value="id" selected>Indonesia</option>
+        <option value="en">English</option>
+      </select>
+      <button id="autoSlideBtn" aria-pressed="false" aria-label="Mulai / hentikan auto slide">▶️ Auto Slide</button>
+    </div>
+  </header>
+
+  <nav id="sidebar" aria-label="Navigasi halaman portofolio">
+    <ul>
+      <li tabindex="0" data-index="0">Biodata</li>
+      <li tabindex="0" data-index="1">Sosial Media</li>
+      <li tabindex="0" data-index="2">Tentang</li>
+      <li tabindex="0" data-index="3">Diary</li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="slides" id="slidesContainer" aria-live="polite" aria-atomic="true">
+      <!-- Slide 0: Biodata -->
+      <section class="slide" id="slide0" tabindex="0" aria-label="Halaman Biodata">
+        <h1>Hai, Aku Olifia</h1>
+        <div class="bio">
+          <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=400&q=80" alt="Foto Olifia" />
+          <ul>
+            <li>Umur: 16 tahun</li>
+            <li>Tempat, Tanggal Lahir: Balikpapan, 26 Oktober 2008</li>
+            <li>Hobi: Bermain Roblox</li>
+            <li>Sekolah: SMKN Negeri 3, Jurusan TKJ</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Slide 1: Sosial Media -->
+      <section class="slide" id="slide1" tabindex="0" aria-label="Halaman Sosial Media">
+        <h1>Sosial Media</h1>
+        <ul class="social-links">
+          <li><a href="https://www.instagram.com/lilipooo08?igsh=MTFoYmc4a2kydzVpeA==" target="_blank" rel="noopener" aria-label="Instagram Olifia">Instagram</a></li>
+          <li><a href="https://wa.me/082344896131" target="_blank" rel="noopener" aria-label="WhatsApp Olifia">WhatsApp</a></li>
+          <li><a href="https://www.tiktok.com/@suprisebch?_t=ZS-8zzreV2MaUa&_r=1" target="_blank" rel="noopener" aria-label="TikTok Olifia">TikTok</a></li>
+        </ul>
+      </section>
+
+      <!-- Slide 2: Tentang -->
+      <section class="slide" id="slide2" tabindex="0" aria-label="Halaman Tentang Olifia">
+        <h1>Tentang Aku</h1>
+        <p>
+          Saya sangat senang bermain Roblox karena saya bertemu dengan teman-teman baru, tapi cita-cita saya adalah menjadi bagian di perusahaan besar dan menikahi orang kaya.
+          Mimpi saya adalah bersekolah di sekolah kedinasan setelah lulus dari SMKN Negeri 3.
+          Saya senang berbaur dengan teman-teman baru dan sangat ceria.
+        </p>
+      </section>
+
+      <!-- Slide 3: Diary -->
+      <section class="slide" id="slide3" tabindex="0" aria-label="Halaman Diary Olifia">
+        <h1>Diary</h1>
+        <article class="diary">
+          <p>Hari ini aku bermain Roblox dengan teman-temanku dan sangat senang bisa bertemu mereka lagi. Cuaca sangat cerah dan aku merasa sangat bahagia.</p>
+        </article>
+        <article class="diary">
+          <p>Besok ada ujian di sekolah, aku sudah belajar dengan giat dan berharap hasilnya bagus. Aku juga ingin sekali jalan-jalan setelah ujian.</p>
+        </article>
+        <div class="diary-images">
+          <img src="C:\Users\olifi\OneDrive\Documents\My Palettes" alt="Diary photo 1" />
+          <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=400&q=80" alt="Diary photo 2" />
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <h3>© 2025 Olifia. All rights reserved.</h3>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    const slides = document.querySelector('.slides');
+    const navLinks = sidebar.querySelectorAll('li');
+    const autoSlideBtn = document.getElementById('autoSlideBtn');
+    const toggleModeBtn = document.getElementById('toggleMode');
+    const languageSwitcher =
